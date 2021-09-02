@@ -25,11 +25,11 @@ namespace hockeyScoreboard
             InitializeComponent();
         }
 
-        private void escreveTempoNoArquivo(String tempo)
+        private void escreveTempoNoArquivo(String tempo, String path)
         {
             try
             {
-                sw = new StreamWriter("time.txt", false, Encoding.ASCII);
+                sw = new StreamWriter(path, false, Encoding.ASCII);
                 sw.Write(tempo);
                 sw.Close();
             }
@@ -39,52 +39,71 @@ namespace hockeyScoreboard
             }
             finally
             {
-                Console.WriteLine("Finaly Block!!!");
+                Console.WriteLine("!");
             }
         }
 
-        private void timer1_Tick(object sender, EventArgs e)
+        private void MainTime(object sender, EventArgs e)
         {
-            //apagaTempoNoArquivo();
+           
             Calc = dtInicial - DateTime.Now;
-            textBox1.Text = string.Format("{0:ss}", Calc.Minutes.ToString());
-            textBox2.Text = string.Format("{0:ss}", Calc.Seconds.ToString());
-            escreveTempoNoArquivo(textBox1.Text + ":" + textBox2.Text);
+            textBox1.Text = Calc.Minutes.ToString();
+            textBox2.Text = Calc.Seconds.ToString();
+            escreveTempoNoArquivo(textBox1.Text + ":" + textBox2.Text,"time.txt");
             
+        }
+        private void homePanaltyTime(object sender, EventArgs e)
+        {
+           
+            Calc = dtInicial - DateTime.Now;
+            textBox4.Text = Calc.Minutes.ToString();
+            textBox3.Text = Calc.Seconds.ToString();
+            escreveTempoNoArquivo(textBox4.Text + ":" + textBox3.Text, "homePenaltyTime.txt");
+
+        }
+        private void awayPanaltyTime(object sender, EventArgs e)
+        {
+            
+            Calc = dtInicial - DateTime.Now;
+            textBox11.Text = string.Format("{0:ss}", Calc.Minutes.ToString());
+            textBox10.Text = string.Format("{0:ss}", Calc.Seconds.ToString());
+            escreveTempoNoArquivo(textBox12 + textBox11.Text + ":" + textBox10.Text, "awayPenaltyTime.txt");
+
         }
         private void button1_Click(object sender, EventArgs e)
         {
-            textBox1.Text = timeOption.Text;
-            if (textBox1.Text == "15")
-            {
-                dtInicial = DateTime.Now.AddMinutes(Convert.ToInt32(textBox1.Text));
-                timer1.Enabled = true;
-            }
-            if (textBox1.Text == "20")
-            {
-                dtInicial = DateTime.Now.AddMinutes(Convert.ToInt32(textBox1.Text));
-                timer1.Enabled = true;
-            }
-            else
-            {
-                timer1.Start();
-            }
-            //stopWatch.Start();
+
+            dtInicial = DateTime.Now.AddMinutes(13);
+            time.Enabled = true;
+
         }
 
         private void button2_Click(object sender, EventArgs e)
         {
-            timer1.Stop();
+           
+            time.Stop();
+           
+            
         }
 
         private void button3_Click(object sender, EventArgs e)
         {
-            timer1.Enabled = false;
+            time.Enabled = false;
             textBox1.Text = "";
             textBox2.Text = "";
-            escreveTempoNoArquivo("");
+            escreveTempoNoArquivo("","time.txt");
+            
+            
         }
 
-        
+        private void button6_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        //private void timeOption_SelectedIndexChanged(object sender, EventArgs e)
+        //{
+        //    textBox1.Text = timeOption.Text;
+       // }
     }
 }
